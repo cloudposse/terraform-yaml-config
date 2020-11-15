@@ -135,13 +135,14 @@ Available targets:
 | terraform | >= 0.12.0 |
 | http | >= 2.0 |
 | local | >= 1.3 |
+| template | >= 2.2 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | http | >= 2.0 |
-| template | n/a |
+| template | >= 2.2 |
 
 ## Inputs
 
