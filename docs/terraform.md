@@ -12,6 +12,7 @@
 | Name | Version |
 |------|---------|
 | http | >= 2.0 |
+| template | n/a |
 
 ## Inputs
 
@@ -31,7 +32,7 @@
 | map\_yaml\_config\_paths | Paths to YAML configuration files of map type | `list(string)` | `[]` | no |
 | name | Solution name, e.g. 'app' or 'jenkins' | `string` | `null` | no |
 | namespace | Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp' | `string` | `null` | no |
-| parameters | Map of variables for interpolation within the YAML config templates. The variables must all be primitives. Direct references to lists or maps will cause a validation error | `map(string)` | `{}` | no |
+| parameters | Map of parameters for interpolation within the YAML config templates | `map(string)` | `{}` | no |
 | regex\_replace\_chars | Regex to replace chars with empty string in `namespace`, `environment`, `stage` and `name`.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
 | stage | Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
 | tags | Additional tags (e.g. `map('BusinessUnit','XYZ')` | `map(string)` | `{}` | no |

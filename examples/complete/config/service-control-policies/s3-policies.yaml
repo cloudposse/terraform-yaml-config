@@ -25,7 +25,7 @@
     - "*"
   condition:
     - test: "StringNotEquals"
-      variable: "s3:x-amz-server-side-encryption"
+      variable: ${s3_amz_server_side_encryption_header_name}
       values:
         - "AES256"
         - "aws:kms"
@@ -39,6 +39,6 @@
     - "*"
   condition:
     - test: "Null"
-      variable: "s3:x-amz-server-side-encryption"
+      variable: ${s3_amz_server_side_encryption_header_name}
       values:
         - true

@@ -3,29 +3,29 @@ locals {
   remote_config_selector = "://"
 
   # Local YAML paths with configs of type map
-  local_map_yaml_config_paths = [
+  local_map_yaml_config_paths = module.this.enabled ? [
     for c in var.map_yaml_config_paths : c if replace(c, local.remote_config_selector, "") == c
-  ]
+  ] : []
 
   # Remote YAML paths with configs of type map
-  remote_map_yaml_config_paths = [
+  remote_map_yaml_config_paths = module.this.enabled ? [
     for c in var.map_yaml_config_paths : c if replace(c, local.remote_config_selector, "") != c
-  ]
+  ] : []
 
   # Local YAML paths with configs of type list
-  local_list_yaml_config_paths = [
+  local_list_yaml_config_paths = module.this.enabled ? [
     for c in var.list_yaml_config_paths : c if replace(c, local.remote_config_selector, "") == c
-  ]
+  ] : []
 
   # Remote YAML paths with configs of type list
-  remote_list_yaml_config_paths = [
+  remote_list_yaml_config_paths = module.this.enabled ? [
     for c in var.list_yaml_config_paths : c if replace(c, local.remote_config_selector, "") != c
-  ]
+  ] : []
 
   # All remote config paths
-  all_remote_config_paths_map = {
+  all_remote_config_paths_map = module.this.enabled ? {
     for c in concat(local.remote_map_yaml_config_paths, local.remote_list_yaml_config_paths) : base64encode(c) => c
-  }
+  } : {}
 
   # Terraform maps from local YAML configuration templates
   local_map_configs = merge(
@@ -44,7 +44,7 @@ locals {
   remote_map_configs = merge(
     [
       for c in local.remote_map_yaml_config_paths : {
-        for k, v in yamldecode(data.http.this[base64encode(c)].body) : k => v
+        for k, v in yamldecode(data.template_file.this[base64encode(c)].rendered) : k => v
       }
     ]
   ...)
@@ -64,7 +64,7 @@ locals {
   remote_list_configs = flatten(
     [
       for c in local.remote_list_yaml_config_paths : [
-        for k, v in yamldecode(data.http.this[base64encode(c)].body) : v
+        for k, v in yamldecode(data.template_file.this[base64encode(c)].rendered) : v
       ]
     ]
   )
@@ -78,6 +78,13 @@ locals {
 
 # Download all remote configs
 data "http" "this" {
-  for_each = local.all_remote_config_paths_map
+  for_each = module.this.enabled ? local.all_remote_config_paths_map : {}
   url      = each.value
+}
+
+# Render all remote configs as templates using the supplied map of template variables
+data "template_file" "this" {
+  for_each = module.this.enabled ? data.http.this : {}
+  template = try(each.value.body, "")
+  vars     = var.parameters
 }

@@ -24,6 +24,6 @@ variable "list_yaml_config_paths" {
 
 variable "parameters" {
   type        = map(string)
-  description = "Map of variables for interpolation within the YAML config templates. The variables must all be primitives. Direct references to lists or maps will cause a validation error"
+  description = "Map of parameters for interpolation within the YAML config templates"
   default     = {}
 }

@@ -25,7 +25,7 @@
 
 -->
 
-Terraform module to convert YAML configurations into Terraform lists and maps.
+Terraform module to convert local and remote YAML configuration templates into Terraform lists and maps.
 
 
 ---
@@ -60,7 +60,10 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 
 ## Introduction
 
-The module accepts paths to local or remote YAML configuration files and converts the YAML configs into Terraform lists and maps for consumption in other Terraform modules.
+The module accepts paths to local and remote YAML configuration template files
+and converts the templates into Terraform lists and maps for consumption in other Terraform modules.
+
+The module also accepts a map of parameters for interpolation within the YAML config templates.
 
 ## Usage
 
@@ -93,6 +96,11 @@ module "yaml_config" {
     "config/service-control-policies/*.yaml",
     "https://raw.githubusercontent.com/cloudposse/terraform-aws-service-control-policies/master/examples/complete/policies/organization-policies.yaml"
   ]
+
+  parameters = {
+    infrastructure_team_name                  = "devops"
+    s3_amz_server_side_encryption_header_name = "s3:x-amz-server-side-encryption"
+  }
 
   context = module.this.context
 }
@@ -133,6 +141,7 @@ Available targets:
 | Name | Version |
 |------|---------|
 | http | >= 2.0 |
+| template | n/a |
 
 ## Inputs
 
@@ -152,7 +161,7 @@ Available targets:
 | map\_yaml\_config\_paths | Paths to YAML configuration files of map type | `list(string)` | `[]` | no |
 | name | Solution name, e.g. 'app' or 'jenkins' | `string` | `null` | no |
 | namespace | Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp' | `string` | `null` | no |
-| parameters | Map of variables for interpolation within the YAML config templates. The variables must all be primitives. Direct references to lists or maps will cause a validation error | `map(string)` | `{}` | no |
+| parameters | Map of parameters for interpolation within the YAML config templates | `map(string)` | `{}` | no |
 | regex\_replace\_chars | Regex to replace chars with empty string in `namespace`, `environment`, `stage` and `name`.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
 | stage | Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
 | tags | Additional tags (e.g. `map('BusinessUnit','XYZ')` | `map(string)` | `{}` | no |
@@ -193,7 +202,9 @@ For additional context, refer to some of these links.
 
 - [Terraform Standard Module Structure](https://www.terraform.io/docs/modules/index.html#standard-module-structure) - HashiCorp's standard module structure is a file and directory layout we recommend for reusable modules distributed in separate repositories.
 - [Terraform Module Requirements](https://www.terraform.io/docs/registry/modules/publish.html#requirements) - HashiCorp's guidance on all the requirements for publishing a module. Meeting the requirements for publishing a module is extremely easy.
-- [Terraform Version Pinning](https://www.terraform.io/docs/configuration/terraform.html#specifying-a-required-terraform-version) - The required_version setting can be used to constrain which versions of the Terraform CLI can be used with your configuration
+- [Terraform Version Pinning](https://www.terraform.io/docs/configuration/terraform.html#specifying-a-required-terraform-version) - The required_version setting can be used to constrain which versions of the Terraform CLI can be used with your configuration.
+- [Terraform `templatefile` Function](https://www.terraform.io/docs/configuration/functions/templatefile.html) - `templatefile` reads the file at the given path and renders its content as a template using a supplied set of template variables.
+- [Terraform `template_file` data source](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) - The `template_file` data source renders a template from a template string, which is usually loaded from an external file.
 
 
 ## Help

@@ -70,16 +70,25 @@ references:
     description: "HashiCorp's guidance on all the requirements for publishing a module. Meeting the requirements for publishing a module is extremely easy."
     url: "https://www.terraform.io/docs/registry/modules/publish.html#requirements"
   - name: "Terraform Version Pinning"
-    description: "The required_version setting can be used to constrain which versions of the Terraform CLI can be used with your configuration"
+    description: "The required_version setting can be used to constrain which versions of the Terraform CLI can be used with your configuration."
     url: "https://www.terraform.io/docs/configuration/terraform.html#specifying-a-required-terraform-version"
+  - name: "Terraform `templatefile` Function"
+    description: "`templatefile` reads the file at the given path and renders its content as a template using a supplied set of template variables."
+    url: "https://www.terraform.io/docs/configuration/functions/templatefile.html"
+  - name: "Terraform `template_file` data source"
+    description: "The `template_file` data source renders a template from a template string, which is usually loaded from an external file."
+    url: "https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file"
 
 # Short description of this project
 description: |-
-  Terraform module to convert YAML configurations into Terraform lists and maps.
+  Terraform module to convert local and remote YAML configuration templates into Terraform lists and maps.
 
 # Introduction to the project
 introduction: |-
-  The module accepts paths to local or remote YAML configuration files and converts the YAML configs into Terraform lists and maps for consumption in other Terraform modules.
+  The module accepts paths to local and remote YAML configuration template files
+  and converts the templates into Terraform lists and maps for consumption in other Terraform modules.
+
+  The module also accepts a map of parameters for interpolation within the YAML config templates.
 
 # How to use this module. Should be an easy example to copy and paste.
 usage: |-
@@ -107,6 +116,11 @@ usage: |-
       "config/service-control-policies/*.yaml",
       "https://raw.githubusercontent.com/cloudposse/terraform-aws-service-control-policies/master/examples/complete/policies/organization-policies.yaml"
     ]
+
+    parameters = {
+      infrastructure_team_name                  = "devops"
+      s3_amz_server_side_encryption_header_name = "s3:x-amz-server-side-encryption"
+    }
 
     context = module.this.context
   }

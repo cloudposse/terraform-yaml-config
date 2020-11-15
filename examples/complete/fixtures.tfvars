@@ -12,5 +12,6 @@ list_yaml_config_paths = [
 ]
 
 parameters = {
-  infrastructure_team_name = "devops"
+  infrastructure_team_name                  = "devops"
+  s3_amz_server_side_encryption_header_name = "s3:x-amz-server-side-encryption"
 }
