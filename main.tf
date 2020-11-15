@@ -60,7 +60,7 @@ locals {
     ]
   )
 
-  # Terraform lists from remote YAML configurations
+  # Terraform lists from remote YAML configuration templates
   remote_list_configs = flatten(
     [
       for c in local.remote_list_yaml_config_paths : [
@@ -69,10 +69,10 @@ locals {
     ]
   )
 
-  # All map configs
+  # Final map configs
   map_configs = merge({}, local.local_map_configs, local.remote_map_configs)
 
-  # All list configs
+  # Final list configs
   list_configs = concat([], local.local_list_configs, local.remote_list_configs)
 }
 
