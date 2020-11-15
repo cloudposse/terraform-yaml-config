@@ -25,10 +25,10 @@
 | environment | Environment, e.g. 'uw2', 'us-west-2', OR 'prod', 'staging', 'dev', 'UAT' | `string` | `null` | no |
 | id\_length\_limit | Limit `id` to this many characters.<br>Set to `0` for unlimited length.<br>Set to `null` for default, which is `0`.<br>Does not affect `id_full`. | `number` | `null` | no |
 | label\_order | The naming order of the id output and Name tag.<br>Defaults to ["namespace", "environment", "stage", "name", "attributes"].<br>You can omit any of the 5 elements, but at least one must be present. | `list(string)` | `null` | no |
-| list\_yaml\_config\_path | Path to YAML configuration files of list type | `string` | `"."` | no |
-| list\_yaml\_configs | YAML configuration files of list type | `list(string)` | `[]` | no |
-| map\_yaml\_config\_path | Path to YAML configuration files of map type | `string` | `"."` | no |
-| map\_yaml\_configs | YAML configuration files of map type | `list(string)` | `[]` | no |
+| list\_yaml\_config\_local\_base\_path | Base path to local YAML configuration files of list type | `string` | `"."` | no |
+| list\_yaml\_config\_paths | Paths to YAML configuration files of list type | `list(string)` | `[]` | no |
+| map\_yaml\_config\_local\_base\_path | Base path to local YAML configuration files of map type | `string` | `"."` | no |
+| map\_yaml\_config\_paths | Paths to YAML configuration files of map type | `list(string)` | `[]` | no |
 | name | Solution name, e.g. 'app' or 'jenkins' | `string` | `null` | no |
 | namespace | Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp' | `string` | `null` | no |
 | regex\_replace\_chars | Regex to replace chars with empty string in `namespace`, `environment`, `stage` and `name`.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |

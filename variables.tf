@@ -1,23 +1,23 @@
-variable "map_yaml_config_path" {
+variable "map_yaml_config_local_base_path" {
   type        = string
-  description = "Path to YAML configuration files of map type"
+  description = "Base path to local YAML configuration files of map type"
   default     = "."
 }
 
-variable "map_yaml_configs" {
+variable "map_yaml_config_paths" {
   type        = list(string)
-  description = "YAML configuration files of map type"
+  description = "Paths to YAML configuration files of map type"
   default     = []
 }
 
-variable "list_yaml_config_path" {
+variable "list_yaml_config_local_base_path" {
   type        = string
-  description = "Path to YAML configuration files of list type"
+  description = "Base path to local YAML configuration files of list type"
   default     = "."
 }
 
-variable "list_yaml_configs" {
+variable "list_yaml_config_paths" {
   type        = list(string)
-  description = "YAML configuration files of list type"
+  description = "Paths to YAML configuration files of list type"
   default     = []
 }
