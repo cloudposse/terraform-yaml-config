@@ -1,6 +1,6 @@
 escalations:
-  - name: example-team-escalation-to-devops
-    description: "Escalate to 'devops' team if 'example-team' does not acknowledge in 10 minutes"
+  - name: example-team-escalation-to-${infrastructure_team_name}
+    description: "Escalate to '${infrastructure_team_name}' team if 'example-team' does not acknowledge in 10 minutes"
     owner_team_name: example-team
     rule:
       condition: if-not-acked
@@ -8,7 +8,7 @@ escalations:
       delay: 10
       recipients:
         - type: team
-          team_name: devops
+          team_name: ${infrastructure_team_name}
     repeat:
       wait_interval: 10
       count: 2

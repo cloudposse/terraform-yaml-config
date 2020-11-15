@@ -1,5 +1,5 @@
 teams:
-  - name: devops
+  - name: ${infrastructure_team_name}
     description: "Infrastructure Team"
     members:
       - username: user1@example.com

@@ -10,3 +10,7 @@ list_yaml_config_paths = [
   "config/service-control-policies/*.yaml",
   "https://raw.githubusercontent.com/cloudposse/terraform-aws-service-control-policies/master/examples/complete/policies/organization-policies.yaml"
 ]
+
+parameters = {
+  infrastructure_team_name = "devops"
+}

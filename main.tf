@@ -27,20 +27,20 @@ locals {
     for c in concat(local.remote_map_yaml_config_paths, local.remote_list_yaml_config_paths) : base64encode(c) => c
   }
 
-  # Terraform maps from local YAML configurations
+  # Terraform maps from local YAML configuration templates
   local_map_configs = merge(
     flatten(
       [
         for c in local.local_map_yaml_config_paths : [
           for f in fileset(var.map_yaml_config_local_base_path, c) : {
-            for k, v in yamldecode(file(format("%s/%s", var.map_yaml_config_local_base_path, f))) : k => v
+            for k, v in yamldecode(templatefile(format("%s/%s", var.map_yaml_config_local_base_path, f), var.parameters)) : k => v
           }
         ]
       ]
     )
   ...)
 
-  # Terraform maps from remote YAML configurations
+  # Terraform maps from remote YAML configuration templates
   remote_map_configs = merge(
     [
       for c in local.remote_map_yaml_config_paths : {
@@ -49,12 +49,12 @@ locals {
     ]
   ...)
 
-  # Terraform lists from local YAML configurations
+  # Terraform lists from local YAML configuration templates
   local_list_configs = flatten(
     [
       for c in local.local_list_yaml_config_paths : [
         for f in fileset(var.list_yaml_config_local_base_path, c) : [
-          for k, v in yamldecode(file(format("%s/%s", var.list_yaml_config_local_base_path, f))) : v
+          for k, v in yamldecode(templatefile(format("%s/%s", var.list_yaml_config_local_base_path, f), var.parameters)) : v
         ]
       ]
     ]
