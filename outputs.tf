@@ -1,9 +1,9 @@
-output "map_config" {
-  value       = local.map_config
-  description = "Terraform map resources built from YAML configurations"
+output "map_configs" {
+  value       = local.map_configs
+  description = "Terraform maps from YAML configurations"
 }
 
-output "list_config" {
-  value       = local.list_config
-  description = "Terraform list resources built from YAML configurations"
+output "list_configs" {
+  value       = local.list_configs
+  description = "Terraform lists from YAML configurations"
 }
