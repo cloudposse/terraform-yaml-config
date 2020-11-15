@@ -25,12 +25,12 @@ func TestExamplesComplete(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 
 	// Run `terraform output` to get the value of an output variable
-	mapConfig := terraform.Output(t, terraformOptions, "map_config")
+	mapConfig := terraform.OutputMap(t, terraformOptions, "map_configs")
 	// Verify we're getting back the outputs we expect
 	assert.Greater(t, len(mapConfig), 0)
 
 	// Run `terraform output` to get the value of an output variable
-	listConfig := terraform.Output(t, terraformOptions, "list_config")
+	listConfig := terraform.OutputList(t, terraformOptions, "list_configs")
 	// Verify we're getting back the outputs we expect
 	assert.Greater(t, len(listConfig), 0)
 }
