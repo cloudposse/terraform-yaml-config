@@ -114,11 +114,14 @@ Available targets:
 | Name | Version |
 |------|---------|
 | terraform | >= 0.12.0 |
+| http | >= 2.0 |
 | local | >= 1.3 |
 
 ## Providers
 
-No provider.
+| Name | Version |
+|------|---------|
+| http | >= 2.0 |
 
 ## Inputs
 
