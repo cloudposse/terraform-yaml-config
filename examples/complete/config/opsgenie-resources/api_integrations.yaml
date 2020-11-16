@@ -1,4 +1,0 @@
-api_integrations:
-  - name: datadog
-    type: Datadog
-    owner_team_name:

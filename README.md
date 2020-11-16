@@ -82,24 +82,24 @@ For automated tests of the complete example using [bats](https://github.com/bats
 module "yaml_config" {
   source = "git::https://github.com/cloudposse/terraform-yaml-config.git?ref=master"
 
-  map_yaml_config_local_base_path = path.cwd
+  map_config_local_base_path = path.cwd
 
-  map_yaml_config_paths = [
-    "config/opsgenie-resources/*.yaml",
+  map_config_paths = [
+    "config/map-configs/*.yaml",
     "https://raw.githubusercontent.com/cloudposse/terraform-opsgenie-incident-management/master/examples/config/resources/services.yaml",
     "https://raw.githubusercontent.com/cloudposse/terraform-opsgenie-incident-management/master/examples/config/resources/team_routing_rules.yaml"
   ]
 
-  list_yaml_config_local_base_path = path.cwd
+  list_config_local_base_path = path.cwd
 
-  list_yaml_config_paths = [
-    "config/service-control-policies/*.yaml",
+  list_config_paths = [
+    "config/list-configs/*.yaml",
     "https://raw.githubusercontent.com/cloudposse/terraform-aws-service-control-policies/master/examples/complete/policies/organization-policies.yaml"
   ]
 
   parameters = {
-    infrastructure_team_name                  = "devops"
-    s3_amz_server_side_encryption_header_name = "s3:x-amz-server-side-encryption"
+    param1 = "1"
+    param2 = "2"
   }
 
   context = module.this.context
@@ -156,10 +156,10 @@ Available targets:
 | environment | Environment, e.g. 'uw2', 'us-west-2', OR 'prod', 'staging', 'dev', 'UAT' | `string` | `null` | no |
 | id\_length\_limit | Limit `id` to this many characters.<br>Set to `0` for unlimited length.<br>Set to `null` for default, which is `0`.<br>Does not affect `id_full`. | `number` | `null` | no |
 | label\_order | The naming order of the id output and Name tag.<br>Defaults to ["namespace", "environment", "stage", "name", "attributes"].<br>You can omit any of the 5 elements, but at least one must be present. | `list(string)` | `null` | no |
-| list\_yaml\_config\_local\_base\_path | Base path to local YAML configuration files of list type | `string` | `"."` | no |
-| list\_yaml\_config\_paths | Paths to YAML configuration files of list type | `list(string)` | `[]` | no |
-| map\_yaml\_config\_local\_base\_path | Base path to local YAML configuration files of map type | `string` | `"."` | no |
-| map\_yaml\_config\_paths | Paths to YAML configuration files of map type | `list(string)` | `[]` | no |
+| list\_config\_local\_base\_path | Base path to local YAML configuration files of list type | `string` | `"."` | no |
+| list\_config\_paths | Paths to YAML configuration files of list type | `list(string)` | `[]` | no |
+| map\_config\_local\_base\_path | Base path to local YAML configuration files of map type | `string` | `"."` | no |
+| map\_config\_paths | Paths to YAML configuration files of map type | `list(string)` | `[]` | no |
 | name | Solution name, e.g. 'app' or 'jenkins' | `string` | `null` | no |
 | namespace | Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp' | `string` | `null` | no |
 | parameters | Map of parameters for interpolation within the YAML config templates | `map(string)` | `{}` | no |
