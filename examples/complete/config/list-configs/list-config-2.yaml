@@ -1,0 +1,5 @@
+- id: "2"
+  param: "${param2}"
+  settings:
+    - "123"
+    - "456"

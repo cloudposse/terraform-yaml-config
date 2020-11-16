@@ -1,0 +1,4 @@
+key1:
+  - name: name1
+    param: "${param1}"
+    type: type1
