@@ -8,7 +8,7 @@ map_config_paths = [
 
 list_config_paths = [
   "config/list-configs/*.yaml",
-  "https://raw.githubusercontent.com/cloudposse/terraform-aws-service-control-policies/master/examples/complete/policies/organization-policies.yaml"
+  "https://raw.githubusercontent.com/cloudposse/terraform-aws-service-control-policies/master/catalog/organization-policies.yaml"
 ]
 
 parameters = {
