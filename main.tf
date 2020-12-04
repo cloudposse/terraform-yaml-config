@@ -44,7 +44,7 @@ locals {
   remote_map_configs = merge(
     [
       for c in local.remote_map_config_paths : {
-        for k, v in yamldecode(data.template_file.this[base64encode(c)].rendered) : k => v
+        for k, v in yamldecode(data.template_file.remote_config[base64encode(c)].rendered) : k => v
       }
     ]
   ...)
@@ -64,27 +64,27 @@ locals {
   remote_list_configs = flatten(
     [
       for c in local.remote_list_config_paths : [
-        for k, v in yamldecode(data.template_file.this[base64encode(c)].rendered) : v
+        for k, v in yamldecode(data.template_file.remote_config[base64encode(c)].rendered) : v
       ]
     ]
   )
 
   # Final map configs
-  map_configs = merge({}, local.local_map_configs, local.remote_map_configs)
+  all_map_configs = merge({}, local.local_map_configs, local.remote_map_configs)
 
   # Final list configs
-  list_configs = concat([], local.local_list_configs, local.remote_list_configs)
+  all_list_configs = concat([], local.local_list_configs, local.remote_list_configs)
 }
 
 # Download all remote configs
-data "http" "this" {
+data "http" "remote_config" {
   for_each = module.this.enabled ? local.all_remote_config_paths_map : {}
   url      = each.value
 }
 
 # Render all remote configs as templates using the supplied map of template variables
-data "template_file" "this" {
-  for_each = module.this.enabled ? data.http.this : {}
+data "template_file" "remote_config" {
+  for_each = module.this.enabled ? data.http.remote_config : {}
   template = try(each.value.body, "")
   vars     = var.parameters
 }
