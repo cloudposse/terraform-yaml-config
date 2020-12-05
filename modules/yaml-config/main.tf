@@ -73,11 +73,11 @@ locals {
   all_list_configs = concat([], local.local_list_configs, local.remote_list_configs)
 
   # Map Imports
-  map_imports = flatten([
-    for imports in lookup(local.all_map_configs, "import", []) : [
-      for import in imports : format("%s.yaml", import)
-    ]
-  ])
+  # map_imports = lookup(local.all_map_configs, "import", [])
+
+  map_imports = [
+    for import in lookup(local.all_map_configs, "import", []) : format("%s.yaml", import)
+  ]
 }
 
 # Download all remote configs
