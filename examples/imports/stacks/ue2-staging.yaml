@@ -1,0 +1,24 @@
+import:
+  - ue2-globals
+
+vars:
+  stage: staging
+
+terraform:
+  vars:
+
+helmfile:
+  vars:
+
+components:
+  terraform:
+    vpc:
+      vars:
+        cidr_block: "10.104.0.0/18"
+    eks:
+      vars:
+
+  helmfile:
+    nginx-ingress:
+      vars:
+        installed: true
