@@ -67,6 +67,11 @@ and converts the templates into Terraform lists and maps for consumption in othe
 
 The module also accepts a map of parameters for interpolation within the YAML config templates.
 
+### Acknowledgments
+Big thanks to [Imperative Systems Inc.](https://github.com/Imperative-Systems-Inc)
+for the excelent [deepmerge](https://github.com/Imperative-Systems-Inc/terraform-modules/tree/master/deepmerge) Terraform module
+to perform a deep map merge of standard Terraform maps and objects.
+
 ## Usage
 
 
