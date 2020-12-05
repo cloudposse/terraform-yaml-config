@@ -78,6 +78,9 @@ references:
   - name: "Terraform `template_file` data source"
     description: "The `template_file` data source renders a template from a template string, which is usually loaded from an external file."
     url: "https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file"
+  - name: "Deepmerge"
+    description: "Terraform module to perform a deep map merge of standard Terraform maps and objects."
+    url: "https://github.com/Imperative-Systems-Inc/terraform-modules/tree/master/deepmerge"
 
 # Short description of this project
 description: |-

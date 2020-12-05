@@ -166,6 +166,7 @@ Available targets:
 | namespace | Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp' | `string` | `null` | no |
 | parameters | Map of parameters for interpolation within the YAML config templates | `map(string)` | `{}` | no |
 | regex\_replace\_chars | Regex to replace chars with empty string in `namespace`, `environment`, `stage` and `name`.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
+| remote\_config\_selector | String to detect local vs. remote config paths | `string` | `"://"` | no |
 | stage | Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
 | tags | Additional tags (e.g. `map('BusinessUnit','XYZ')` | `map(string)` | `{}` | no |
 
@@ -208,6 +209,7 @@ For additional context, refer to some of these links.
 - [Terraform Version Pinning](https://www.terraform.io/docs/configuration/terraform.html#specifying-a-required-terraform-version) - The required_version setting can be used to constrain which versions of the Terraform CLI can be used with your configuration.
 - [Terraform `templatefile` Function](https://www.terraform.io/docs/configuration/functions/templatefile.html) - `templatefile` reads the file at the given path and renders its content as a template using a supplied set of template variables.
 - [Terraform `template_file` data source](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) - The `template_file` data source renders a template from a template string, which is usually loaded from an external file.
+- [Deepmerge](https://github.com/Imperative-Systems-Inc/terraform-modules/tree/master/deepmerge) - Terraform module to perform a deep map merge of standard Terraform maps and objects.
 
 
 ## Help

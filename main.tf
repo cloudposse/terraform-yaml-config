@@ -1,31 +1,8 @@
 locals {
-  # String to detect local vs. remote config paths
-  remote_config_selector = "://"
-
   # Local YAML paths with configs of type map
   local_map_config_paths = module.this.enabled ? [
-    for c in var.map_config_paths : c if replace(c, local.remote_config_selector, "") == c
+    for c in var.map_config_paths : c if replace(c, var.remote_config_selector, "") == c
   ] : []
-
-  # Remote YAML paths with configs of type map
-  remote_map_config_paths = module.this.enabled ? [
-    for c in var.map_config_paths : c if replace(c, local.remote_config_selector, "") != c
-  ] : []
-
-  # Local YAML paths with configs of type list
-  local_list_config_paths = module.this.enabled ? [
-    for c in var.list_config_paths : c if replace(c, local.remote_config_selector, "") == c
-  ] : []
-
-  # Remote YAML paths with configs of type list
-  remote_list_config_paths = module.this.enabled ? [
-    for c in var.list_config_paths : c if replace(c, local.remote_config_selector, "") != c
-  ] : []
-
-  # All remote config paths
-  all_remote_config_paths_map = module.this.enabled ? {
-    for c in concat(local.remote_map_config_paths, local.remote_list_config_paths) : base64encode(c) => c
-  } : {}
 
   # Terraform maps from local YAML configuration templates
   local_map_configs = merge(
@@ -40,6 +17,11 @@ locals {
     )
   ...)
 
+  # Remote YAML paths with configs of type map
+  remote_map_config_paths = module.this.enabled ? [
+    for c in var.map_config_paths : c if replace(c, var.remote_config_selector, "") != c
+  ] : []
+
   # Terraform maps from remote YAML configuration templates
   remote_map_configs = merge(
     [
@@ -48,6 +30,11 @@ locals {
       }
     ]
   ...)
+
+  # Local YAML paths with configs of type list
+  local_list_config_paths = module.this.enabled ? [
+    for c in var.list_config_paths : c if replace(c, var.remote_config_selector, "") == c
+  ] : []
 
   # Terraform lists from local YAML configuration templates
   local_list_configs = flatten(
@@ -60,6 +47,11 @@ locals {
     ]
   )
 
+  # Remote YAML paths with configs of type list
+  remote_list_config_paths = module.this.enabled ? [
+    for c in var.list_config_paths : c if replace(c, var.remote_config_selector, "") != c
+  ] : []
+
   # Terraform lists from remote YAML configuration templates
   remote_list_configs = flatten(
     [
@@ -68,6 +60,11 @@ locals {
       ]
     ]
   )
+
+  # All remote config paths
+  all_remote_config_paths_map = module.this.enabled ? {
+    for c in concat(local.remote_map_config_paths, local.remote_list_config_paths) : base64encode(c) => c
+  } : {}
 
   # Final map configs
   all_map_configs = merge({}, local.local_map_configs, local.remote_map_configs)

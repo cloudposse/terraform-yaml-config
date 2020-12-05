@@ -27,3 +27,9 @@ variable "parameters" {
   description = "Map of parameters for interpolation within the YAML config templates"
   default     = {}
 }
+
+variable "remote_config_selector" {
+  type        = string
+  description = "String to detect local vs. remote config paths"
+  default     = "://"
+}
