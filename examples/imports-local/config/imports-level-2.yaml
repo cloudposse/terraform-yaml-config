@@ -1,0 +1,12 @@
+import:
+  - imports-level-3
+
+vars:
+  region: us-east-2
+  environment: ue2
+
+terraform:
+  vars:
+
+helmfile:
+  vars:
