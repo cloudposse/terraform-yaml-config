@@ -86,4 +86,17 @@ locals {
 
   # Final list configs
   all_list_configs = concat([], local.local_list_configs, local.remote_list_configs)
+
+  # Imports from local map configs
+  local_map_imports = [
+    for import in lookup(merge({}, local.local_map_configs), "import", []) : format("%s.yaml", import)
+  ]
+
+  # Imports from remote map configs
+  remote_map_imports = [
+    for import in lookup(merge({}, local.remote_map_configs), "import", []) : format("%s/%s.yaml", var.map_config_remote_base_path, import)
+  ]
+
+  # Combined imports from local and remote map configs
+  all_map_imports = concat(local.remote_map_imports, local.local_map_imports)
 }
