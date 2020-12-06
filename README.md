@@ -139,17 +139,14 @@ Available targets:
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12.0 |
+| terraform | >= 0.13.0 |
 | http | >= 2.0 |
 | local | >= 1.3 |
 | template | >= 2.2 |
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| http | >= 2.0 |
-| template | >= 2.2 |
+No provider.
 
 ## Inputs
 
@@ -181,6 +178,10 @@ Available targets:
 |------|-------------|
 | list\_configs | Terraform lists from YAML configurations |
 | map\_configs | Terraform maps from YAML configurations |
+| yaml\_config\_1\_imports | First level of imports from YAML configurations |
+| yaml\_config\_2\_imports | Second level of imports from YAML configurations |
+| yaml\_config\_3\_imports | Third level of imports from YAML configurations |
+| yaml\_config\_4\_imports | Fourth level of imports from YAML configurations |
 
 <!-- markdownlint-restore -->
 
