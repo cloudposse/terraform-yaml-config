@@ -65,17 +65,6 @@ locals {
   all_remote_config_paths_map = module.this.enabled ? {
     for c in concat(local.remote_map_config_paths, local.remote_list_config_paths) : base64encode(c) => c
   } : {}
-
-  # Final map configs
-  all_map_configs = merge({}, local.local_map_configs, local.remote_map_configs)
-
-  # Final list configs
-  all_list_configs = concat([], local.local_list_configs, local.remote_list_configs)
-
-  # Imports from maps
-  map_imports = [
-    for import in lookup(local.all_map_configs, "import", []) : format("%s.yaml", import)
-  ]
 }
 
 # Download all remote configs
@@ -89,4 +78,12 @@ data "template_file" "remote_config" {
   for_each = module.this.enabled ? data.http.remote_config : {}
   template = try(each.value.body, "")
   vars     = var.parameters
+}
+
+locals {
+  # Final map configs
+  all_map_configs = merge({}, local.local_map_configs, local.remote_map_configs)
+
+  # Final list configs
+  all_list_configs = concat([], local.local_list_configs, local.remote_list_configs)
 }
