@@ -1,7 +1,7 @@
 variable "map_config_local_base_path" {
   type        = string
   description = "Base path to local YAML configuration files of map type"
-  default     = "."
+  default     = ""
 }
 
 variable "map_config_paths" {
@@ -13,7 +13,7 @@ variable "map_config_paths" {
 variable "list_config_local_base_path" {
   type        = string
   description = "Base path to local YAML configuration files of list type"
-  default     = "."
+  default     = ""
 }
 
 variable "list_config_paths" {
