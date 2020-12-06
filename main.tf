@@ -28,7 +28,7 @@ module "yaml_config_3" {
   source = "./modules/yaml-config"
 
   map_config_local_base_path  = var.map_config_local_base_path
-  map_config_paths            = var.map_config_paths
+  map_config_paths            = module.yaml_config_2.map_imports
   list_config_local_base_path = var.list_config_local_base_path
   list_config_paths           = var.list_config_paths
   parameters                  = var.parameters
@@ -41,7 +41,7 @@ module "yaml_config_4" {
   source = "./modules/yaml-config"
 
   map_config_local_base_path  = var.map_config_local_base_path
-  map_config_paths            = var.map_config_paths
+  map_config_paths            = module.yaml_config_3.map_imports
   list_config_local_base_path = var.list_config_local_base_path
   list_config_paths           = var.list_config_paths
   parameters                  = var.parameters
@@ -54,7 +54,7 @@ module "yaml_config_5" {
   source = "./modules/yaml-config"
 
   map_config_local_base_path  = var.map_config_local_base_path
-  map_config_paths            = var.map_config_paths
+  map_config_paths            = module.yaml_config_4.map_imports
   list_config_local_base_path = var.list_config_local_base_path
   list_config_paths           = var.list_config_paths
   parameters                  = var.parameters
