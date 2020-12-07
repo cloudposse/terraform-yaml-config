@@ -97,3 +97,9 @@ merged = {
   "key1-3" = "value1-3(double-overwrite)"
 }
 ```
+
+## Attribution
+
+This `deepmerge` module is a based on the one by [Imperative Systems Inc](https://github.com/Imperative-Systems-Inc/terraform-modules/tree/master/deepmerge). 
+Code within this folder are licensed under the Creative Commons License. 
+See [LICENSE](LICENSE.md) for more details.

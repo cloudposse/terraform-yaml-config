@@ -71,7 +71,7 @@ The module also supports `import` attribute in map configuration templates.
 Up to 5 levels of imports hierarchy are supported, and all imported maps are deepmerged into a final configuration map.
 
 
-### Acknowledgments
+### Attributions
 
 Big thanks to [Imperative Systems Inc.](https://github.com/Imperative-Systems-Inc)
 for the excellent [deepmerge](https://github.com/Imperative-Systems-Inc/terraform-modules/tree/master/deepmerge) Terraform module
