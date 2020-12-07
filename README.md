@@ -67,9 +67,20 @@ and converts the templates into Terraform lists and maps for consumption in othe
 
 The module can accept a map of parameters for interpolation within the YAML config templates.
 
-The module also supports `import` attribute in map configuration templates.
-Up to 5 levels of imports hierarchy are supported, and all imported maps are deepmerged into a final configuration map.
+The module also supports a top-level `import` attribute in map configuration templates, which will include the file and perform a deep merge.
+Up to 5 levels of imports hierarchy are supported, and all imported maps are deep merged into a final configuration map.
 
+For example, if you have a config file like this (e.g. `myconfig.yaml`):
+
+  ```yaml
+    import:
+      - file1
+      - file2
+  ```
+
+Then, this module will deep merge `file1.yaml` and `file2.yaml` into `myconfig.yaml`.
+
+__Note:__ Do not include the extensions (e.g. `.yaml`) in the imports.
 
 ### Attributions
 
@@ -89,9 +100,9 @@ For a complete example, see [examples/complete](examples/complete).
 For automated tests of the complete example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest)
 (which tests and deploys the example on Datadog), see [test](test).
 
-For an example of using local config maps with importing and deepmerging into a final configuration map, see [examples/imports-local](examples/imports-local).
+For an example of using local config maps with `import` and deep merging into a final configuration map, see [examples/imports-local](examples/imports-local).
 
-For an example of using remote config maps with importing and deepmerging into a final configuration map, see [examples/imports-remote](examples/imports-remote).
+For an example of using remote config maps with `import` and deep merging into a final configuration map, see [examples/imports-remote](examples/imports-remote).
 
 
 
@@ -129,7 +140,13 @@ module "yaml_config" {
 }
 ```
 
-### Example of local maps configurations with importing and deepmerging
+### Example of local maps configurations with `import` and deep merging
+
+In the example, we use two levels of imports,
+and the module deep merges the local config files `imports-level-3.yaml`, `imports-level-2.yaml`, and `imports-level-1.yaml`
+into a final config map.
+
+See [examples/imports-local](examples/imports-local) for more details.
 
 ```hcl
 module "yaml_config" {
@@ -145,7 +162,13 @@ module "yaml_config" {
 }
 ```
 
-### Example of remote maps configurations with importing and deepmerging
+### Example of remote maps configurations with with `import` and deep merging
+
+In the example, we use two levels of imports,
+and the module deep merges the remote config files `globals.yaml`, `ue2-globals.yaml`, and `ue2-prod.yaml`
+into a final config map.
+
+See [examples/imports-remote](examples/imports-remote) for more details.
 
 ```hcl
 module "yaml_config" {
