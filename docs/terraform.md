@@ -44,9 +44,5 @@ No provider.
 |------|-------------|
 | list\_configs | Terraform lists from YAML configurations |
 | map\_configs | Terraform maps from YAML configurations |
-| yaml\_config\_1\_imports | First level of imports from YAML configurations |
-| yaml\_config\_2\_imports | Second level of imports from YAML configurations |
-| yaml\_config\_3\_imports | Third level of imports from YAML configurations |
-| yaml\_config\_4\_imports | Fourth level of imports from YAML configurations |
 
 <!-- markdownlint-restore -->
