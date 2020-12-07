@@ -110,7 +110,7 @@ usage: |-
   For automated tests of the complete example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest)
   (which tests and deploys the example on Datadog), see [test](test).
 
-  For an example of using local config maps with importing and deepmerging into a final configuration map, see [examples/imports-local](examples/imports-local).
+  For an example of using local config maps with `import` and deep-merging into a final configuration map, see [examples/imports-local](examples/imports-local).
 
   For an example of using remote config maps with importing and deepmerging into a final configuration map, see [examples/imports-remote](examples/imports-remote).
 
