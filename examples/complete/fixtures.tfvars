@@ -1,14 +1,18 @@
 enabled = true
 
+map_config_local_base_path = "./config"
+
 map_config_paths = [
-  "config/map-configs/*.yaml",
+  "map-configs/*.yaml",
   "https://raw.githubusercontent.com/cloudposse/terraform-opsgenie-incident-management/master/examples/config/resources/services.yaml",
   "https://raw.githubusercontent.com/cloudposse/terraform-opsgenie-incident-management/master/examples/config/resources/team_routing_rules.yaml"
 ]
 
+list_config_local_base_path = "./config"
+
 list_config_paths = [
-  "config/list-configs/*.yaml",
-  "https://raw.githubusercontent.com/cloudposse/terraform-aws-service-control-policies/master/examples/complete/policies/organization-policies.yaml"
+  "list-configs/*.yaml",
+  "https://raw.githubusercontent.com/cloudposse/terraform-aws-service-control-policies/master/catalog/organization-policies.yaml"
 ]
 
 parameters = {

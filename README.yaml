@@ -78,6 +78,9 @@ references:
   - name: "Terraform `template_file` data source"
     description: "The `template_file` data source renders a template from a template string, which is usually loaded from an external file."
     url: "https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file"
+  - name: "Deepmerge"
+    description: "Terraform module to perform a deep map merge of standard Terraform maps and objects."
+    url: "https://github.com/Imperative-Systems-Inc/terraform-modules/tree/master/deepmerge"
 
 # Short description of this project
 description: |-
@@ -88,7 +91,28 @@ introduction: |-
   The module accepts paths to local and remote YAML configuration template files
   and converts the templates into Terraform lists and maps for consumption in other Terraform modules.
 
-  The module also accepts a map of parameters for interpolation within the YAML config templates.
+  The module can accept a map of parameters for interpolation within the YAML config templates.
+
+  The module also supports a top-level `import` attribute in map configuration templates, which will include the file and perform a deep merge.
+  Up to 5 levels of imports hierarchy are supported, and all imported maps are deep merged into a final configuration map.
+
+  For example, if you have a config file like this (e.g. `myconfig.yaml`):
+
+    ```yaml
+      import:
+        - file1
+        - file2
+    ```
+
+  Then, this module will deep merge `file1.yaml` and `file2.yaml` into `myconfig.yaml`.
+
+  __Note:__ Do not include the extensions (e.g. `.yaml`) in the imports.
+
+  ### Attributions
+
+  Big thanks to [Imperative Systems Inc.](https://github.com/Imperative-Systems-Inc)
+  for the excellent [deepmerge](https://github.com/Imperative-Systems-Inc/terraform-modules/tree/master/deepmerge) Terraform module
+  to perform a deep map merge of standard Terraform maps and objects.
 
 # How to use this module. Should be an easy example to copy and paste.
 usage: |-
@@ -97,23 +121,31 @@ usage: |-
   For automated tests of the complete example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest)
   (which tests and deploys the example on Datadog), see [test](test).
 
+  For an example of using local config maps with `import` and deep merging into a final configuration map, see [examples/imports-local](examples/imports-local).
+
+  For an example of using remote config maps with `import` and deep merging into a final configuration map, see [examples/imports-remote](examples/imports-remote).
+
+# Example usage
+examples: |-
+
+  ### Example of local and remote maps and lists configurations with interpolation parameters
 
   ```hcl
   module "yaml_config" {
     source = "git::https://github.com/cloudposse/terraform-yaml-config.git?ref=master"
 
-    map_config_local_base_path = path.cwd
+    map_config_local_base_path = "./config"
 
     map_config_paths = [
-      "config/map-configs/*.yaml",
+      "map-configs/*.yaml",
       "https://raw.githubusercontent.com/cloudposse/terraform-opsgenie-incident-management/master/examples/config/resources/services.yaml",
       "https://raw.githubusercontent.com/cloudposse/terraform-opsgenie-incident-management/master/examples/config/resources/team_routing_rules.yaml"
     ]
 
-    list_config_local_base_path = path.cwd
+    list_config_local_base_path = "./config"
 
     list_config_paths = [
-      "config/list-configs/*.yaml",
+      "list-configs/*.yaml",
       "https://raw.githubusercontent.com/cloudposse/terraform-aws-service-control-policies/master/examples/complete/policies/organization-policies.yaml"
     ]
 
@@ -126,9 +158,49 @@ usage: |-
   }
   ```
 
-# Example usage
-examples: |-
-  Review the [complete example](examples/complete) to see how to use this module.
+  ### Example of local maps configurations with `import` and deep merging
+
+  In the example, we use two levels of imports,
+  and the module deep merges the local config files `imports-level-3.yaml`, `imports-level-2.yaml`, and `imports-level-1.yaml`
+  into a final config map.
+
+  See [examples/imports-local](examples/imports-local) for more details.
+
+  ```hcl
+  module "yaml_config" {
+    source = "git::https://github.com/cloudposse/terraform-yaml-config.git?ref=master"
+
+    map_config_local_base_path = "./config"
+
+    map_config_paths = [
+      "imports-level-1.yaml"
+    ]
+
+    context = module.this.context
+  }
+  ```
+
+  ### Example of remote maps configurations with with `import` and deep merging
+
+  In the example, we use two levels of imports,
+  and the module deep merges the remote config files `globals.yaml`, `ue2-globals.yaml`, and `ue2-prod.yaml`
+  into a final config map.
+
+  See [examples/imports-remote](examples/imports-remote) for more details.
+
+  ```hcl
+  module "yaml_config" {
+    source = "git::https://github.com/cloudposse/terraform-yaml-config.git?ref=master"
+
+    map_config_remote_base_path = "https://raw.githubusercontent.com/cloudposse/atmos/master/example/stacks"
+
+    map_config_paths = [
+      "https://raw.githubusercontent.com/cloudposse/atmos/master/example/stacks/ue2-prod.yaml"
+    ]
+
+    context = module.this.context
+  }
+  ```
 
 # How to get started quickly
 #quickstart: |-

@@ -1,4 +1,6 @@
+<!-- markdownlint-disable -->
 # terraform-yaml-config [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-yaml-config.svg)](https://github.com/cloudposse/terraform-yaml-config/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
+<!-- markdownlint-restore -->
 
 [![README Header][readme_header_img]][readme_header_link]
 
@@ -63,7 +65,28 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 The module accepts paths to local and remote YAML configuration template files
 and converts the templates into Terraform lists and maps for consumption in other Terraform modules.
 
-The module also accepts a map of parameters for interpolation within the YAML config templates.
+The module can accept a map of parameters for interpolation within the YAML config templates.
+
+The module also supports a top-level `import` attribute in map configuration templates, which will include the file and perform a deep merge.
+Up to 5 levels of imports hierarchy are supported, and all imported maps are deep merged into a final configuration map.
+
+For example, if you have a config file like this (e.g. `myconfig.yaml`):
+
+  ```yaml
+    import:
+      - file1
+      - file2
+  ```
+
+Then, this module will deep merge `file1.yaml` and `file2.yaml` into `myconfig.yaml`.
+
+__Note:__ Do not include the extensions (e.g. `.yaml`) in the imports.
+
+### Attributions
+
+Big thanks to [Imperative Systems Inc.](https://github.com/Imperative-Systems-Inc)
+for the excellent [deepmerge](https://github.com/Imperative-Systems-Inc/terraform-modules/tree/master/deepmerge) Terraform module
+to perform a deep map merge of standard Terraform maps and objects.
 
 ## Usage
 
@@ -77,23 +100,34 @@ For a complete example, see [examples/complete](examples/complete).
 For automated tests of the complete example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest)
 (which tests and deploys the example on Datadog), see [test](test).
 
+For an example of using local config maps with `import` and deep merging into a final configuration map, see [examples/imports-local](examples/imports-local).
+
+For an example of using remote config maps with `import` and deep merging into a final configuration map, see [examples/imports-remote](examples/imports-remote).
+
+
+
+
+## Examples
+
+
+### Example of local and remote maps and lists configurations with interpolation parameters
 
 ```hcl
 module "yaml_config" {
   source = "git::https://github.com/cloudposse/terraform-yaml-config.git?ref=master"
 
-  map_config_local_base_path = path.cwd
+  map_config_local_base_path = "./config"
 
   map_config_paths = [
-    "config/map-configs/*.yaml",
+    "map-configs/*.yaml",
     "https://raw.githubusercontent.com/cloudposse/terraform-opsgenie-incident-management/master/examples/config/resources/services.yaml",
     "https://raw.githubusercontent.com/cloudposse/terraform-opsgenie-incident-management/master/examples/config/resources/team_routing_rules.yaml"
   ]
 
-  list_config_local_base_path = path.cwd
+  list_config_local_base_path = "./config"
 
   list_config_paths = [
-    "config/list-configs/*.yaml",
+    "list-configs/*.yaml",
     "https://raw.githubusercontent.com/cloudposse/terraform-aws-service-control-policies/master/examples/complete/policies/organization-policies.yaml"
   ]
 
@@ -106,12 +140,49 @@ module "yaml_config" {
 }
 ```
 
+### Example of local maps configurations with `import` and deep merging
 
+In the example, we use two levels of imports,
+and the module deep merges the local config files `imports-level-3.yaml`, `imports-level-2.yaml`, and `imports-level-1.yaml`
+into a final config map.
 
+See [examples/imports-local](examples/imports-local) for more details.
 
-## Examples
+```hcl
+module "yaml_config" {
+  source = "git::https://github.com/cloudposse/terraform-yaml-config.git?ref=master"
 
-Review the [complete example](examples/complete) to see how to use this module.
+  map_config_local_base_path = "./config"
+
+  map_config_paths = [
+    "imports-level-1.yaml"
+  ]
+
+  context = module.this.context
+}
+```
+
+### Example of remote maps configurations with with `import` and deep merging
+
+In the example, we use two levels of imports,
+and the module deep merges the remote config files `globals.yaml`, `ue2-globals.yaml`, and `ue2-prod.yaml`
+into a final config map.
+
+See [examples/imports-remote](examples/imports-remote) for more details.
+
+```hcl
+module "yaml_config" {
+  source = "git::https://github.com/cloudposse/terraform-yaml-config.git?ref=master"
+
+  map_config_remote_base_path = "https://raw.githubusercontent.com/cloudposse/atmos/master/example/stacks"
+
+  map_config_paths = [
+    "https://raw.githubusercontent.com/cloudposse/atmos/master/example/stacks/ue2-prod.yaml"
+  ]
+
+  context = module.this.context
+}
+```
 
 
 
@@ -132,17 +203,14 @@ Available targets:
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12.0 |
+| terraform | >= 0.13.0 |
 | http | >= 2.0 |
 | local | >= 1.3 |
 | template | >= 2.2 |
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| http | >= 2.0 |
-| template | >= 2.2 |
+No provider.
 
 ## Inputs
 
@@ -156,14 +224,17 @@ Available targets:
 | environment | Environment, e.g. 'uw2', 'us-west-2', OR 'prod', 'staging', 'dev', 'UAT' | `string` | `null` | no |
 | id\_length\_limit | Limit `id` to this many characters.<br>Set to `0` for unlimited length.<br>Set to `null` for default, which is `0`.<br>Does not affect `id_full`. | `number` | `null` | no |
 | label\_order | The naming order of the id output and Name tag.<br>Defaults to ["namespace", "environment", "stage", "name", "attributes"].<br>You can omit any of the 5 elements, but at least one must be present. | `list(string)` | `null` | no |
-| list\_config\_local\_base\_path | Base path to local YAML configuration files of list type | `string` | `"."` | no |
+| list\_config\_local\_base\_path | Base path to local YAML configuration files of list type | `string` | `""` | no |
 | list\_config\_paths | Paths to YAML configuration files of list type | `list(string)` | `[]` | no |
-| map\_config\_local\_base\_path | Base path to local YAML configuration files of map type | `string` | `"."` | no |
+| list\_config\_remote\_base\_path | Base path to remote YAML configuration files of list type | `string` | `""` | no |
+| map\_config\_local\_base\_path | Base path to local YAML configuration files of map type | `string` | `""` | no |
 | map\_config\_paths | Paths to YAML configuration files of map type | `list(string)` | `[]` | no |
+| map\_config\_remote\_base\_path | Base path to remote YAML configuration files of map type | `string` | `""` | no |
 | name | Solution name, e.g. 'app' or 'jenkins' | `string` | `null` | no |
 | namespace | Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp' | `string` | `null` | no |
 | parameters | Map of parameters for interpolation within the YAML config templates | `map(string)` | `{}` | no |
 | regex\_replace\_chars | Regex to replace chars with empty string in `namespace`, `environment`, `stage` and `name`.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
+| remote\_config\_selector | String to detect local vs. remote config paths | `string` | `"://"` | no |
 | stage | Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
 | tags | Additional tags (e.g. `map('BusinessUnit','XYZ')` | `map(string)` | `{}` | no |
 
@@ -206,6 +277,7 @@ For additional context, refer to some of these links.
 - [Terraform Version Pinning](https://www.terraform.io/docs/configuration/terraform.html#specifying-a-required-terraform-version) - The required_version setting can be used to constrain which versions of the Terraform CLI can be used with your configuration.
 - [Terraform `templatefile` Function](https://www.terraform.io/docs/configuration/functions/templatefile.html) - `templatefile` reads the file at the given path and renders its content as a template using a supplied set of template variables.
 - [Terraform `template_file` data source](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) - The `template_file` data source renders a template from a template string, which is usually loaded from an external file.
+- [Deepmerge](https://github.com/Imperative-Systems-Inc/terraform-modules/tree/master/deepmerge) - Terraform module to perform a deep map merge of standard Terraform maps and objects.
 
 
 ## Help
@@ -339,8 +411,10 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
 
 ### Contributors
 
+<!-- markdownlint-disable -->
 |  [![Erik Osterman][osterman_avatar]][osterman_homepage]<br/>[Erik Osterman][osterman_homepage] | [![Andriy Knysh][aknysh_avatar]][aknysh_homepage]<br/>[Andriy Knysh][aknysh_homepage] |
 |---|---|
+<!-- markdownlint-restore -->
 
   [osterman_homepage]: https://github.com/osterman
   [osterman_avatar]: https://img.cloudposse.com/150x150/https://github.com/osterman.png
