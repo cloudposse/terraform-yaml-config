@@ -132,7 +132,9 @@ examples: |-
 
   ```hcl
   module "yaml_config" {
-    source = "git::https://github.com/cloudposse/terraform-yaml-config.git?ref=master"
+    source = "cloudposse/config/yaml"
+    # Cloud Posse recommends pinning every module to a specific version
+    # version     = "x.x.x"
 
     map_config_local_base_path = "./config"
 
@@ -168,7 +170,9 @@ examples: |-
 
   ```hcl
   module "yaml_config" {
-    source = "git::https://github.com/cloudposse/terraform-yaml-config.git?ref=master"
+    source = "cloudposse/config/yaml"
+    # Cloud Posse recommends pinning every module to a specific version
+    # version     = "x.x.x"
 
     map_config_local_base_path = "./config"
 
@@ -190,7 +194,9 @@ examples: |-
 
   ```hcl
   module "yaml_config" {
-    source = "git::https://github.com/cloudposse/terraform-yaml-config.git?ref=master"
+    source = "cloudposse/config/yaml"
+    # Cloud Posse recommends pinning every module to a specific version
+    # version     = "x.x.x"
 
     map_config_remote_base_path = "https://raw.githubusercontent.com/cloudposse/atmos/master/example/stacks"
 
