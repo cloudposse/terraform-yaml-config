@@ -1,6 +1,6 @@
 locals {
   // Find the greatest depth through the maps
-  greatest_depth = max(concat([
+  greatest_depth = max(0, concat([
     for mod in local.modules :
     concat([
       for i in range(0, length(var.maps)) :
