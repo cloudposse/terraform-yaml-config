@@ -68,7 +68,7 @@ and converts the templates into Terraform lists and maps for consumption in othe
 The module can accept a map of parameters for interpolation within the YAML config templates.
 
 The module also supports a top-level `import` attribute in map configuration templates, which will include the file and perform a deep merge.
-Up to 5 levels of imports hierarchy are supported, and all imported maps are deep merged into a final configuration map.
+Up to 10 levels of imports hierarchy are supported, and all imported maps are deep merged into a final configuration map.
 
 For example, if you have a config file like this (e.g. `myconfig.yaml`):
 
