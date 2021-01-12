@@ -35,11 +35,12 @@ locals {
       if length(local.merged_map[key].path) == depth + 1
     }
   }
+
   // The lowest level of the re-assembled map is special and not part of the auto-generated depth.tf file
-  m0 = {
+  m0 = try({
     for field in local.merged_fields_by_depth[0] :
     field.path[0] => { final_val = field.value, sub_val = lookup(local.m1, field.key, null) }[field.is_final ? "final_val" : "sub_val"]
-  }
+  }, {})
 }
 
 // Check to make sure the highest level module has no remaining values that weren't recursed through
