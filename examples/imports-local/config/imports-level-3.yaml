@@ -1,11 +1,14 @@
+import:
+  - imports-level-4
+
 vars:
   namespace: eg
 
 terraform:
-  vars:
+  vars: {}
 
 helmfile:
-  vars:
+  vars: {}
 
 components:
   terraform:

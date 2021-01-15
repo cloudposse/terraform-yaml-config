@@ -1,0 +1,8 @@
+vars:
+  level: 4
+
+terraform:
+  vars: {}
+
+helmfile:
+  vars: {}

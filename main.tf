@@ -163,3 +163,18 @@ module "maps_deepmerge" {
     module.yaml_config_1.map_configs
   ]
 }
+
+locals {
+  all_imports = concat(
+    module.yaml_config_1.all_map_imports,
+    module.yaml_config_2.all_map_imports,
+    module.yaml_config_3.all_map_imports,
+    module.yaml_config_4.all_map_imports,
+    module.yaml_config_5.all_map_imports,
+    module.yaml_config_6.all_map_imports,
+    module.yaml_config_7.all_map_imports,
+    module.yaml_config_8.all_map_imports,
+    module.yaml_config_9.all_map_imports,
+    module.yaml_config_10.all_map_imports
+  )
+}

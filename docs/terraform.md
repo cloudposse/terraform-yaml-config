@@ -42,6 +42,7 @@ No provider.
 
 | Name | Description |
 |------|-------------|
+| all\_imports | List of all imported YAML configurations |
 | list\_configs | Terraform lists from YAML configurations |
 | map\_configs | Terraform maps from YAML configurations |
 

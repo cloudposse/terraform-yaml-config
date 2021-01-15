@@ -1,12 +1,13 @@
 import:
   - imports-level-3
+  - imports-level-3a
 
 vars:
   region: us-east-2
   environment: ue2
 
 terraform:
-  vars:
+  vars: {}
 
 helmfile:
-  vars:
+  vars: {}
