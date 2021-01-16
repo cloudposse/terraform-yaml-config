@@ -243,6 +243,7 @@ No provider.
 | map\_config\_local\_base\_path | Base path to local YAML configuration files of map type | `string` | `""` | no |
 | map\_config\_paths | Paths to YAML configuration files of map type | `list(string)` | `[]` | no |
 | map\_config\_remote\_base\_path | Base path to remote YAML configuration files of map type | `string` | `""` | no |
+| map\_configs | List of existing configurations of map type. Deep-merging of the existing map configs takes precedence over the map configs loaded from YAML files | `list(map(any))` | `[]` | no |
 | name | Solution name, e.g. 'app' or 'jenkins' | `string` | `null` | no |
 | namespace | Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp' | `string` | `null` | no |
 | parameters | Map of parameters for interpolation within the YAML config templates | `map(string)` | `{}` | no |

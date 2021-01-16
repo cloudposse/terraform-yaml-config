@@ -9,6 +9,8 @@ module "yaml_config" {
   list_config_remote_base_path = var.list_config_remote_base_path
   list_config_paths            = var.list_config_paths
 
+  map_configs = var.map_configs
+
   parameters = var.parameters
 
   context = module.this.context

@@ -150,18 +150,21 @@ module "yaml_config_10" {
 module "maps_deepmerge" {
   source = "./modules/deepmerge"
 
-  maps = [
-    module.yaml_config_10.map_configs,
-    module.yaml_config_9.map_configs,
-    module.yaml_config_8.map_configs,
-    module.yaml_config_7.map_configs,
-    module.yaml_config_6.map_configs,
-    module.yaml_config_5.map_configs,
-    module.yaml_config_4.map_configs,
-    module.yaml_config_3.map_configs,
-    module.yaml_config_2.map_configs,
-    module.yaml_config_1.map_configs
-  ]
+  maps = concat(
+    [
+      module.yaml_config_10.map_configs,
+      module.yaml_config_9.map_configs,
+      module.yaml_config_8.map_configs,
+      module.yaml_config_7.map_configs,
+      module.yaml_config_6.map_configs,
+      module.yaml_config_5.map_configs,
+      module.yaml_config_4.map_configs,
+      module.yaml_config_3.map_configs,
+      module.yaml_config_2.map_configs,
+      module.yaml_config_1.map_configs
+    ],
+    var.map_configs
+  )
 }
 
 locals {
