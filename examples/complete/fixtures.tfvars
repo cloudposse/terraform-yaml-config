@@ -23,20 +23,30 @@ parameters = {
 map_configs = [
   {
     key3 = {
-      name  = "name3"
-      param = "param3"
-      type  = "type3"
+      name  = "name3_override"
+      param = "param3_override"
     },
     key4 = {
       name  = "name4"
       param = "param4"
       type  = "type4"
     },
-    key5 = [
+    key5 = {
+      name  = "name5"
+      param = ["param5a", "param5b"]
+      type  = "type5"
+    }
+  },
+  {
+    key6 = {
+      name  = "name6"
+      param = "param6"
+      type  = "type6"
+    },
+    key1 = [
       {
-        name  = "name5"
-        param = "param5"
-        type  = "type5"
+        name  = "name1_override"
+        param = "param1_override"
       }
     ]
   }

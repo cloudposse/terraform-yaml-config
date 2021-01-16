@@ -47,7 +47,7 @@ variable "remote_config_selector" {
 }
 
 variable "map_configs" {
-  type        = list(map(any))
+  type        = any
   description = "List of existing configurations of map type. Deep-merging of the existing map configs takes precedence over the map configs loaded from YAML files"
   default     = []
 }
