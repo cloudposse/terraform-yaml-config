@@ -7,7 +7,12 @@ vars:
   environment: ue2
 
 terraform:
-  vars: {}
+  vars:
+    var_1: 1_override
+    var_2: 2_override
 
 helmfile:
-  vars: {}
+  vars:
+    var_1: 1
+    var_2: 2
+
