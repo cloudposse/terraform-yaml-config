@@ -2,7 +2,10 @@ vars:
   level: 3
 
 terraform:
-  vars: {}
+  vars:
+    var_1: 1a
+    var_2: 2a
+    var_3: 3a
 
 helmfile:
   vars: {}
