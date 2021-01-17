@@ -45,3 +45,9 @@ variable "remote_config_selector" {
   description = "String to detect local vs. remote config paths"
   default     = "://"
 }
+
+variable "map_configs" {
+  type        = any
+  description = "List of existing configurations of map type. Deep-merging of the existing map configs takes precedence over the map configs loaded from YAML files"
+  default     = []
+}
