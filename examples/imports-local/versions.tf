@@ -14,5 +14,12 @@ terraform {
       source  = "hashicorp/http"
       version = ">= 2.0"
     }
+    external = {
+      source  = "hashicorp/external"
+      version = ">= 2.0"
+    }
+    utils = {
+      source = "cloudposse/utils"
+    }
   }
 }
