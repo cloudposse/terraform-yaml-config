@@ -65,9 +65,18 @@ locals {
   } : {}
 }
 
-module "all_map_configs" {
-  source = "../deepmerge"
-  maps   = concat([{}], local.remote_map_configs, local.local_map_configs)
+//module "all_map_configs" {
+//  source = "../deepmerge"
+//  maps   = concat([{}], local.remote_map_configs, local.local_map_configs)
+//}
+
+data "utils_deep_merge_yaml" "all_map_configs" {
+  inputs = concat(
+    [
+      yamlencode(local.remote_map_configs),
+      yamlencode(local.local_map_configs)
+    ]
+  )
 }
 
 # Download all remote configs
