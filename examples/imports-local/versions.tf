@@ -20,7 +20,7 @@ terraform {
     }
     utils = {
       source  = "cloudposse/utils"
-      version = "0.0.1-alpha3"
+      version = "0.0.1-alpha5"
     }
   }
 }
