@@ -148,7 +148,7 @@ module "yaml_config_10" {
 }
 
 data "utils_deep_merge_yaml" "maps_deepmerge" {
-  inputs = concat(
+  inputs = compact(flatten(concat(
     [
       yamlencode(module.yaml_config_10.map_configs),
       yamlencode(module.yaml_config_9.map_configs),
@@ -161,7 +161,8 @@ data "utils_deep_merge_yaml" "maps_deepmerge" {
       yamlencode(module.yaml_config_2.map_configs),
       yamlencode(module.yaml_config_1.map_configs)
     ],
-  )
+    [for m in var.map_configs : yamlencode(m)],
+  )))
 }
 
 locals {
