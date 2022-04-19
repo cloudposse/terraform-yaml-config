@@ -9,14 +9,9 @@ locals {
     for path in var.map_config_paths : path if replace(path, var.remote_config_selector, "") != path
   ] : []
 
-  # Remote YAML paths with configs of type list
-  remote_list_config_paths = module.this.enabled ? [
-    for path in var.list_config_paths : path if replace(path, var.remote_config_selector, "") != path
-  ] : []
-
   # All remote config paths
   all_remote_config_paths_map = module.this.enabled ? {
-    for c in concat(local.remote_map_config_paths, local.remote_list_config_paths) : base64encode(c) => c
+    for c in local.remote_map_config_paths : base64encode(c) => c
   } : {}
 
   local_util_deep_merge_list = flatten([
