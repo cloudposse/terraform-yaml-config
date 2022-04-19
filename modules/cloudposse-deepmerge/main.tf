@@ -19,17 +19,17 @@ locals {
     for c in concat(local.remote_map_config_paths, local.remote_list_config_paths) : base64encode(c) => c
   } : {}
 
-    local_util_deep_merge_list = flatten([
+  local_util_deep_merge_list = flatten([
     for path in local.local_map_config_paths : [
       for f in fileset(var.map_config_local_base_path, path) :
-        templatefile(format("%s/%s", var.map_config_local_base_path, f), var.parameters)
+      templatefile(format("%s/%s", var.map_config_local_base_path, f), var.parameters)
     ]
   ])
 
   # Terraform maps from remote YAML configuration templates
   remote_util_deep_merge_list = flatten([
-      for path in local.remote_map_config_paths :
-        data.template_file.remote_config[base64encode(path)].rendered
+    for path in local.remote_map_config_paths :
+    data.template_file.remote_config[base64encode(path)].rendered
   ])
 }
 
@@ -47,7 +47,7 @@ data "template_file" "remote_config" {
 }
 
 data "utils_deep_merge_yaml" "all_map_configs" {
-  input = concat(local.remote_util_deep_merge_list, local.local_util_deep_merge_list)
+  input          = concat(local.remote_util_deep_merge_list, local.local_util_deep_merge_list)
   deep_copy_list = var.deep_copy_list
-  append_list = var.append_list
+  append_list    = var.append_list
 }
