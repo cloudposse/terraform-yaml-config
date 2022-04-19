@@ -239,7 +239,6 @@ Available targets:
 | <a name="requirement_http"></a> [http](#requirement\_http) | >= 2.0 |
 | <a name="requirement_local"></a> [local](#requirement\_local) | >= 1.3 |
 | <a name="requirement_template"></a> [template](#requirement\_template) | >= 2.2 |
-| <a name="requirement_utils"></a> [utils](#requirement\_utils) | >= 0.3.0 |
 
 ## Providers
 
