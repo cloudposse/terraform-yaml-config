@@ -1,4 +1,5 @@
 output "map_configs" {
+#  value       = yamldecode(module.deep_merge.merged)
   value       = module.deep_merge.merged
   description = "Terraform maps from YAML configurations"
 }
