@@ -4,10 +4,28 @@ variable "map_config_local_base_path" {
   default     = ""
 }
 
+variable "map_config_remote_base_path" {
+  type        = string
+  description = "Base path to remote YAML configuration files of map type"
+  default     = ""
+}
+
 variable "map_config_paths" {
   type        = list(string)
   description = "Paths to YAML configuration files of map type"
   default     = []
+}
+
+variable "list_config_local_base_path" {
+  type        = string
+  description = "Base path to local YAML configuration files of list type"
+  default     = ""
+}
+
+variable "list_config_remote_base_path" {
+  type        = string
+  description = "Base path to remote YAML configuration files of list type"
+  default     = ""
 }
 
 variable "list_config_paths" {
