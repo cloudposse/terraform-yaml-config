@@ -67,14 +67,14 @@ locals {
   local_util_deep_merge_list = flatten([
     for path in local.local_map_config_paths : [
       for f in fileset(var.map_config_local_base_path, path) :
-        templatefile(format("%s/%s", var.map_config_local_base_path, f), var.parameters)
+      templatefile(format("%s/%s", var.map_config_local_base_path, f), var.parameters)
     ]
   ])
 
   # Terraform maps from remote YAML configuration templates
   remote_util_deep_merge_list = flatten([
     for path in local.remote_map_config_paths :
-      data.template_file.remote_config[base64encode(path)].rendered
+    data.template_file.remote_config[base64encode(path)].rendered
   ])
 }
 
