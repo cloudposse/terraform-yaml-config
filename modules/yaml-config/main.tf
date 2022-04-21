@@ -95,8 +95,8 @@ data "template_file" "remote_config" {
 module "deep_merge" {
   source         = "../deepmerge"
   maps           = concat([{}], local.remote_map_configs_decoded, local.local_map_configs_decoded)
-  append_list    = var.append_list
-  deep_copy_list = var.deep_copy_list
+  append_list_enabled    = var.append_list_enabled
+  deep_copy_list_enabled = var.deep_copy_list_enabled
 }
 
 locals {

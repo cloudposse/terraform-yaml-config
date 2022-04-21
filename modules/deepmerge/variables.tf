@@ -15,13 +15,13 @@ variable "maps" {
   }
 }
 
-variable "append_list" {
+variable "append_list_enabled" {
   type        = bool
   description = "A boolean flag to enable/disable appending lists instead of overwriting them."
   default     = false
 }
 
-variable "deep_copy_list" {
+variable "deep_copy_list_enabled" {
   type        = bool
   description = "A boolean flag to enable/disable merging of list elements one by one."
   default     = false
