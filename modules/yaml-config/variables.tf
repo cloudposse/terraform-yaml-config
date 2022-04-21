@@ -45,3 +45,15 @@ variable "remote_config_selector" {
   description = "String to detect local vs. remote config paths"
   default     = "://"
 }
+
+variable "append_list_enabled" {
+  type        = bool
+  description = "A boolean flag to enable/disable appending lists instead of overwriting them."
+  default     = false
+}
+
+variable "deep_copy_list_enabled" {
+  type        = bool
+  description = "A boolean flag to enable/disable merging of list elements one by one."
+  default     = false
+}

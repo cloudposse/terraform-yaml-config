@@ -1,5 +1,5 @@
 output "map_configs" {
-  value       = module.all_map_configs.merged
+  value       = module.deep_merge.merged
   description = "Terraform maps from YAML configurations"
 }
 

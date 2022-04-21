@@ -4,8 +4,7 @@ locals {
     for path in var.map_config_paths : path if replace(path, var.remote_config_selector, "") == path
   ] : []
 
-  # Terraform maps from local YAML configuration templates
-  local_map_configs = flatten(
+  local_map_configs_decoded = flatten(
     [
       for path in local.local_map_config_paths : [
         for f in fileset(var.map_config_local_base_path, path) : {
@@ -21,7 +20,7 @@ locals {
   ] : []
 
   # Terraform maps from remote YAML configuration templates
-  remote_map_configs = flatten(
+  remote_map_configs_decoded = flatten(
     [
       for path in local.remote_map_config_paths : {
         for k, v in yamldecode(data.template_file.remote_config[base64encode(path)].rendered) : k => v
@@ -63,11 +62,7 @@ locals {
   all_remote_config_paths_map = module.this.enabled ? {
     for c in concat(local.remote_map_config_paths, local.remote_list_config_paths) : base64encode(c) => c
   } : {}
-}
 
-module "all_map_configs" {
-  source = "../deepmerge"
-  maps   = concat([{}], local.remote_map_configs, local.local_map_configs)
 }
 
 # Download all remote configs
@@ -83,18 +78,25 @@ data "template_file" "remote_config" {
   vars     = var.parameters
 }
 
+module "deep_merge" {
+  source                 = "../deepmerge"
+  maps                   = concat([{}], local.remote_map_configs_decoded, local.local_map_configs_decoded)
+  append_list_enabled    = var.append_list_enabled
+  deep_copy_list_enabled = var.deep_copy_list_enabled
+}
+
 locals {
   # Final list configs
   all_list_configs = concat([], local.local_list_configs, local.remote_list_configs)
 
   # Imports from local map configs
   local_map_imports = [
-    for import in lookup(merge({}, local.local_map_configs...), "import", []) : format("%s.yaml", import)
+    for import in lookup(merge({}, local.local_map_configs_decoded...), "import", []) : format("%s.yaml", import)
   ]
 
   # Imports from remote map configs
   remote_map_imports = [
-    for import in lookup(merge({}, local.remote_map_configs...), "import", []) : format("%s/%s.yaml", var.map_config_remote_base_path, import)
+    for import in lookup(merge({}, local.remote_map_configs_decoded...), "import", []) : format("%s/%s.yaml", var.map_config_remote_base_path, import)
   ]
 
   # Combined imports from local and remote map configs
