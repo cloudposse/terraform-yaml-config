@@ -4,14 +4,6 @@ locals {
     for path in var.map_config_paths : path if replace(path, var.remote_config_selector, "") == path
   ] : []
 
-  # Terraform maps from local YAML configuration templates
-  local_map_configs = flatten([
-    for path in local.local_map_config_paths : [
-      for f in fileset(var.map_config_local_base_path, path) :
-      templatefile(format("%s/%s", var.map_config_local_base_path, f), var.parameters)
-    ]
-  ])
-
   local_map_configs_decoded = flatten(
     [
       for path in local.local_map_config_paths : [
@@ -26,12 +18,6 @@ locals {
   remote_map_config_paths = module.this.enabled ? [
     for path in var.map_config_paths : path if replace(path, var.remote_config_selector, "") != path
   ] : []
-
-  # Terraform maps from remote YAML configuration templates
-  remote_map_configs = flatten([
-    for path in local.remote_map_config_paths :
-    data.template_file.remote_config[base64encode(path)].rendered
-  ])
 
   # Terraform maps from remote YAML configuration templates
   remote_map_configs_decoded = flatten(
