@@ -51,3 +51,15 @@ variable "map_configs" {
   description = "List of existing configurations of map type. Deep-merging of the existing map configs takes precedence over the map configs loaded from YAML files"
   default     = []
 }
+
+variable "append_list_enabled" {
+  type        = bool
+  description = "A boolean flag to enable/disable appending lists instead of overwriting them."
+  default     = false
+}
+
+variable "deep_copy_list_enabled" {
+  type        = bool
+  description = "A boolean flag to enable/disable merging of list elements one by one."
+  default     = false
+}
