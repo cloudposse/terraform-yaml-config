@@ -8,6 +8,8 @@ module "yaml_config_1" {
   list_config_paths           = var.list_config_paths
   parameters                  = var.parameters
   remote_config_selector      = var.remote_config_selector
+  append_list_enabled         = var.append_list_enabled
+  deep_copy_list_enabled      = var.deep_copy_list_enabled
 
   context = module.this.context
 }
@@ -23,6 +25,8 @@ module "yaml_config_2" {
   list_config_paths            = var.list_config_paths
   parameters                   = var.parameters
   remote_config_selector       = var.remote_config_selector
+  append_list_enabled          = var.append_list_enabled
+  deep_copy_list_enabled       = var.deep_copy_list_enabled
 
   context = module.this.context
 }
@@ -38,6 +42,8 @@ module "yaml_config_3" {
   list_config_paths            = var.list_config_paths
   parameters                   = var.parameters
   remote_config_selector       = var.remote_config_selector
+  append_list_enabled          = var.append_list_enabled
+  deep_copy_list_enabled       = var.deep_copy_list_enabled
 
   context = module.this.context
 }
@@ -53,6 +59,8 @@ module "yaml_config_4" {
   list_config_paths            = var.list_config_paths
   parameters                   = var.parameters
   remote_config_selector       = var.remote_config_selector
+  append_list_enabled          = var.append_list_enabled
+  deep_copy_list_enabled       = var.deep_copy_list_enabled
 
   context = module.this.context
 }
@@ -68,6 +76,8 @@ module "yaml_config_5" {
   list_config_paths            = var.list_config_paths
   parameters                   = var.parameters
   remote_config_selector       = var.remote_config_selector
+  append_list_enabled          = var.append_list_enabled
+  deep_copy_list_enabled       = var.deep_copy_list_enabled
 
   context = module.this.context
 }
@@ -83,6 +93,8 @@ module "yaml_config_6" {
   list_config_paths            = var.list_config_paths
   parameters                   = var.parameters
   remote_config_selector       = var.remote_config_selector
+  append_list_enabled          = var.append_list_enabled
+  deep_copy_list_enabled       = var.deep_copy_list_enabled
 
   context = module.this.context
 }
@@ -98,6 +110,8 @@ module "yaml_config_7" {
   list_config_paths            = var.list_config_paths
   parameters                   = var.parameters
   remote_config_selector       = var.remote_config_selector
+  append_list_enabled          = var.append_list_enabled
+  deep_copy_list_enabled       = var.deep_copy_list_enabled
 
   context = module.this.context
 }
@@ -113,6 +127,8 @@ module "yaml_config_8" {
   list_config_paths            = var.list_config_paths
   parameters                   = var.parameters
   remote_config_selector       = var.remote_config_selector
+  append_list_enabled          = var.append_list_enabled
+  deep_copy_list_enabled       = var.deep_copy_list_enabled
 
   context = module.this.context
 }
@@ -128,6 +144,8 @@ module "yaml_config_9" {
   list_config_paths            = var.list_config_paths
   parameters                   = var.parameters
   remote_config_selector       = var.remote_config_selector
+  append_list_enabled          = var.append_list_enabled
+  deep_copy_list_enabled       = var.deep_copy_list_enabled
 
   context = module.this.context
 }
@@ -143,6 +161,8 @@ module "yaml_config_10" {
   list_config_paths            = var.list_config_paths
   parameters                   = var.parameters
   remote_config_selector       = var.remote_config_selector
+  append_list_enabled          = var.append_list_enabled
+  deep_copy_list_enabled       = var.deep_copy_list_enabled
 
   context = module.this.context
 }
