@@ -50,24 +50,13 @@ locals {
     for path in var.list_config_paths : path if replace(path, var.remote_config_selector, "") != path
   ] : []
 
-  ## Terraform lists from remote YAML configuration templates
-  #remote_list_configs = flatten(
-  #  [
-  #    for c in local.remote_list_config_paths : [
-  #      for k, v in yamldecode(data.template_file.remote_config[base64encode(c)].rendered) : v
-  #    ]
-  #  ]
-  #)
-
-  # TODO: create a replacement for the data.template_file.remote_config datasource
   remote_config_fixed = {
     for k, v in data.http.remote_config : base64encode(v.value.id) =>  {
       response_body = v.value.response_body
     } if module.this.enabled
   }
 
-  # TODO: recreate the variable creation above to now use the in-built templatefile function, rather
-  #       than the now depricated template_file datasource.  
+  ## Terraform lists from remote YAML configuration templates
   remote_list_configs = flatten(
     [
       for c in local.remote_list_config_paths : [
@@ -88,13 +77,6 @@ data "http" "remote_config" {
   for_each = module.this.enabled ? local.all_remote_config_paths_map : {}
   url      = each.value
 }
-
-# Render all remote configs as templates using the supplied map of template variables
-#data "template_file" "remote_config" {
-#  for_each = module.this.enabled ? data.http.remote_config : {}
-#  template = try(each.value.body, "")
-#  vars     = var.parameters
-#}
 
 module "deep_merge" {
   source                 = "../deepmerge"
