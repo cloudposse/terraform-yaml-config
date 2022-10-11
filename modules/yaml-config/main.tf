@@ -90,11 +90,11 @@ data "http" "remote_config" {
 }
 
 # Render all remote configs as templates using the supplied map of template variables
-data "template_file" "remote_config" {
-  for_each = module.this.enabled ? data.http.remote_config : {}
-  template = try(each.value.body, "")
-  vars     = var.parameters
-}
+#data "template_file" "remote_config" {
+#  for_each = module.this.enabled ? data.http.remote_config : {}
+#  template = try(each.value.body, "")
+#  vars     = var.parameters
+#}
 
 module "deep_merge" {
   source                 = "../deepmerge"
