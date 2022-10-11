@@ -24,7 +24,7 @@ locals {
     [
       for path in local.remote_map_config_paths : {
         #for k, v in yamldecode(data.template_file.remote_config[base64encode(path)].rendered) : k => v
-        for k, v in yamldecode(templatefile(local.remote_config_fixed[base64encode(path)].response_body, var.parameters)) : k => v 
+        for k, v in yamldecode(templatefile(local.remote_configs[base64encode(path)].response_body, var.parameters)) : k => v 
       }
     ]
   )
@@ -50,7 +50,7 @@ locals {
     for path in var.list_config_paths : path if replace(path, var.remote_config_selector, "") != path
   ] : []
 
-  remote_config_fixed = {
+  remote_configs = {
     for k, v in data.http.remote_config : base64encode(v.value.id) =>  {
       response_body = v.value.response_body
     } if module.this.enabled
@@ -60,7 +60,7 @@ locals {
   remote_list_configs = flatten(
     [
       for c in local.remote_list_config_paths : [
-        for k, v in yamldecode(templatefile(local.remote_config_fixed[base64encode(c)].response_body, var.parameters)) : v
+        for k, v in yamldecode(templatefile(local.remote_configs[base64encode(c)].response_body, var.parameters)) : v
       ]
     ]
   )
