@@ -51,8 +51,8 @@ locals {
   ] : []
 
   remote_configs = {
-    for k, v in data.http.remote_config : base64encode(v.value.id) => {
-      response_body = v.value.response_body
+    for k, v in data.http.remote_config : base64encode(v.id) => {
+      response_body = v.response_body
     } if module.this.enabled
   }
 
