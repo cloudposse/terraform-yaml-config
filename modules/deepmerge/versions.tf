@@ -3,7 +3,7 @@ terraform {
 
   required_providers {
     template = {
-      source  = "hashicorp/template"
+      source  = "cloudposse/template"
       version = ">= 2.2"
     }
     http = {
