@@ -6,7 +6,7 @@ variable "maps" {
     error_message = "The `maps` variable must be a list of maps and/or objects. The provided value is not a list."
   }
   validation {
-    condition = !can(index([
+    condition = ! can(index([
       for mp in var.maps :
       try(tolist(mp), toset(mp), tonumber(mp), tobool(mp), tostring(mp), null) == null
       ]
