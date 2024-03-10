@@ -58,6 +58,8 @@ categories:
 # List any related terraform modules that this module may be used with or that this module depends on.
 
 # List any related terraform modules that this module may be used with or that this module depends on.
+
+# List any related terraform modules that this module may be used with or that this module depends on.
 related:
   - name: "terraform-datadog-monitor"
     description: "Terraform module to configure and provision Datadog monitors from a YAML configuration, complete with automated tests."
