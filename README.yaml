@@ -31,7 +31,7 @@ badges:
     url: https://github.com/cloudposse/terraform-yaml-config/commits
   - name: Slack Community
     image: https://slack.cloudposse.com/for-the-badge.svg
-    url: https://slack.cloudposse.com
+    url: https://cloudposse.com/slack
 categories:
   - config
   - configuration
@@ -46,6 +46,8 @@ categories:
   - terraform-list
   - terraform-map
   - account
+
+# List any related terraform modules that this module may be used with or that this module depends on.
 
 # List any related terraform modules that this module may be used with or that this module depends on.
 
@@ -226,9 +228,5 @@ examples: |2-
 #  Here's how to get started...
 
 # Other files to include in this README from the project folder
-include:
-  - "docs/targets.md"
-  - "docs/terraform.md"
-
-# Contributors to this project
+include: []
 contributors: []
